@@ -1,0 +1,6 @@
+.*.swp
+*.o
+*.a
+*.bin
+*.vec
+fasttext-go-binding
