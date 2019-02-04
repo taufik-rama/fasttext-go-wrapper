@@ -1,5 +1,13 @@
 package main
 
+/**
+ * Copyright (c) 2019-present, Tokopedia, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
 // #cgo LDFLAGS: -L${SRCDIR} -lfasttext -lstdc++ -lm
 // #include <stdlib.h>
 // void load_model(char *path);
