@@ -12,16 +12,16 @@ package main
 import "C"
 import (
 	"errors"
-	"fmt"
 	"unsafe"
 )
 
 func main() {
-	LoadModel("fastText/models/basic-model.bin")
-	fmt.Println(Predict("pulsa"))
-	fmt.Println(Predict("puls"))
-	fmt.Println(Predict("Felix"))
-	fmt.Println(Predict("felix"))
+
+	// Load the model
+	// LoadModel("fastText/models/basic-model.bin")
+
+	// Get the predicted value
+	// fmt.Println(Predict("Chell"))
 }
 
 // LoadModel based on the `path`

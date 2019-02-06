@@ -5,21 +5,20 @@
 
 #include <iostream>
 #include <istream>
-#include "fasttext.h"
-#include "real.h"
-#include <streambuf>
+#include <sstream>
 #include <cstring>
+#include "real.h"
+#include "fasttext.h"
+#include "fasttext_wrapper.h"
 
 extern "C" {
 
-    struct input_buffer : std::streambuf {
-        input_buffer(char* begin, char* end) {
-            this->setg(begin, begin, end);
-        }
-    };
-
     fasttext::FastText ft_model;
     bool ft_initialized = false;
+
+    bool has_newline(std::string str) {
+        return (0 == str.compare(str.length() - 1, 1, "\n"));
+    };
 
     void load_model(char *path) {
         if (!ft_initialized) {
@@ -28,13 +27,21 @@ extern "C" {
         }
     }
 
-    int predict(char *query, float *prob, char *out, int out_size) {
+    int predict(char *q, float *prob, char *out, int out_size) {
+
+        std::cout << "Running predict" << "\n";
 
         int32_t k = 1;
         fasttext::real threshold = 0.0;
 
-        input_buffer buffer(query, query + strlen(query));
-        std::istream in(&buffer);
+        std::string query(q);
+
+        if(!has_newline(query)) {
+            query.append("\n");
+        }
+
+        std::istringstream inquery(query);
+        std::istream &in = inquery;
 
         std::vector<std::pair<fasttext::real, std::string>> predictions;
 
