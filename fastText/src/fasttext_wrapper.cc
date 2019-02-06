@@ -29,8 +29,6 @@ extern "C" {
 
     int predict(char *q, float *prob, char *out, int out_size) {
 
-        std::cout << "Running predict" << "\n";
-
         int32_t k = 1;
         fasttext::real threshold = 0.0;
 

@@ -11,7 +11,7 @@ package main
 // int predict(char *query, float *prob, char *buf, int buf_sz);
 import "C"
 import (
-	"errors"
+	"fmt"
 	"unsafe"
 )
 
@@ -30,21 +30,24 @@ func LoadModel(path string) {
 }
 
 // Predict the `sentence`
-func Predict(sentence string) (prob float32, label string, err error) {
+func Predict(sentence string) (label string, prob float32, err error) {
 
 	var cprob C.float
-	var buf *C.char
-	buf = (*C.char)(C.calloc(64, 1))
+	cbuf := (*C.char)(C.malloc(C.ulong(len(sentence))))
 
-	ret := C.predict(C.CString(sentence), &cprob, buf, 64)
+	status := C.predict(
+		C.CString(sentence),
+		&cprob,
+		cbuf,
+		C.int(len(sentence)),
+	)
 
-	if ret != 0 {
-		err = errors.New("error in prediction")
-	} else {
-		label = C.GoString(buf)
-		prob = float32(cprob)
+	label = C.GoString(cbuf)
+	prob = float32(cprob)
+	if status != 0 {
+		err = fmt.Errorf("Exception when predicting `%s`", sentence)
 	}
-	C.free(unsafe.Pointer(buf))
 
-	return prob, label, err
+	C.free(unsafe.Pointer(cbuf))
+	return
 }
