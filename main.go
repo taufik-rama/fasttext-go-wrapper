@@ -18,10 +18,10 @@ import (
 func main() {
 
 	// Load the model
-	// LoadModel("fastText/models/basic-model.bin")
+	LoadModel("fastText/models/basic-model.bin")
 
 	// Get the predicted value
-	// fmt.Println(Predict("Chell"))
+	fmt.Println(Predict("Chell"))
 }
 
 // LoadModel based on the `path`
