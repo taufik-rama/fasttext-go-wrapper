@@ -7,7 +7,7 @@ package main
 
 // #cgo LDFLAGS: -L${SRCDIR} -lfasttext -lstdc++ -lm
 // #include <stdlib.h>
-// void load_model(char *path);
+// int load_model(char *path);
 // int predict(char *query, float *prob, char *buf, int buf_sz);
 import "C"
 import (
