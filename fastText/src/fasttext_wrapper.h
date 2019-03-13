@@ -8,8 +8,9 @@ extern "C" {
     
     /**
      * Initialize the fasttext model located on `path`
+     * returns 0 on success
      */
-    void load_model(char* path);
+    int load_model(char* path);
 
     /**
      * Predict a given keyword
@@ -17,6 +18,7 @@ extern "C" {
      * `prob`: floating value to determine the probability of the result
      * `out`: Predicted value
      * `out_size`: How much characted to be copied into `out`
+     * returns 0 on success
      */
     int predict(char* q, float* prob, char* out, int out_size);
     

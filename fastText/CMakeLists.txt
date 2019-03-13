@@ -15,7 +15,7 @@ set (fasttext_VERSION_MINOR 1)
 
 include_directories(fasttext)
 
-set(CMAKE_CXX_FLAGS "-pthread -std=c++11 -funroll-loops -O3 -march=native -Wno-deprecated-declarations")
+set(CMAKE_CXX_FLAGS "-pthread -std=c++11 -funroll-loops -O3 -march=native -fPIC -Wno-deprecated-declarations")
 
 set(HEADER_FILES
     src/args.h

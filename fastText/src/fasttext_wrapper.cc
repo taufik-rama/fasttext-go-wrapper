@@ -3,6 +3,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
+#include <unistd.h>
 #include <iostream>
 #include <istream>
 #include <sstream>
@@ -20,11 +21,15 @@ extern "C" {
         return (0 == str.compare(str.length() - 1, 1, "\n"));
     };
 
-    void load_model(char *path) {
+    int load_model(char *path) {
         if (!ft_initialized) {
+            if(!access(path, F_OK) != -1) {
+                return -1;
+            }
             ft_model.loadModel(std::string(path));
             ft_initialized = true;
         }
+        return 0;
     }
 
     int predict(char *q, float *prob, char *out, int out_size) {
@@ -46,7 +51,7 @@ extern "C" {
         if(!ft_model.predictLine(in, predictions, k, threshold)) {
             *prob = -1;
             strncpy(out, "", out_size);
-            return 1;
+            return -1;
         }
 
         for(const auto &prediction : predictions) {
