@@ -21,9 +21,9 @@ extern "C" {
         return (0 == str.compare(str.length() - 1, 1, "\n"));
     };
 
-    int load_model(char *path) {
+    int load_model(const char *path) {
         if (!initialized) {
-            if(!access(path, F_OK) != -1) {
+            if(access(path, F_OK) != 0) {
                 return -1;
             }
             model.loadModel(std::string(path));
@@ -32,12 +32,12 @@ extern "C" {
         return 0;
     }
 
-    int predict(char *q, float *prob, char *out, int out_size) {
+    int predict(const char *query_in, float *prob, char *out, int out_size) {
 
         int32_t k = 1;
         fasttext::real threshold = 0.0;
 
-        std::string query(q);
+        std::string query(query_in);
 
         if(!has_newline(query)) {
             query.append("\n");
