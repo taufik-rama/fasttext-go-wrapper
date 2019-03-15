@@ -14,20 +14,20 @@
 
 extern "C" {
 
-    fasttext::FastText ft_model;
-    bool ft_initialized = false;
+    fasttext::FastText model;
+    bool initialized = false;
 
     bool has_newline(std::string str) {
         return (0 == str.compare(str.length() - 1, 1, "\n"));
     };
 
     int load_model(char *path) {
-        if (!ft_initialized) {
+        if (!initialized) {
             if(!access(path, F_OK) != -1) {
                 return -1;
             }
-            ft_model.loadModel(std::string(path));
-            ft_initialized = true;
+            model.loadModel(std::string(path));
+            initialized = true;
         }
         return 0;
     }
@@ -48,7 +48,7 @@ extern "C" {
 
         std::vector<std::pair<fasttext::real, std::string>> predictions;
 
-        if(!ft_model.predictLine(in, predictions, k, threshold)) {
+        if(!model.predictLine(in, predictions, k, threshold)) {
             *prob = -1;
             strncpy(out, "", out_size);
             return -1;
