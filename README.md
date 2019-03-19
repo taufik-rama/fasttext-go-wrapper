@@ -14,7 +14,7 @@ $ cmake ..
 $ make
 ... # Output omitted
 
-$ cp libfasttext.a ../../
+$ cp libfasttext.a ../../ # Copy the static lib into main directory
 ```
 
 - Then, build it normally
