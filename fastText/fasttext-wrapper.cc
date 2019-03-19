@@ -8,9 +8,8 @@
 #include <istream>
 #include <sstream>
 #include <cstring>
-#include "real.h"
-#include "fasttext.h"
-#include "fasttext_wrapper.h"
+#include <fastText/fasttext.h>
+#include <fasttext-wrapper.h>
 
 extern "C" {
 

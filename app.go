@@ -7,7 +7,7 @@ import "fmt"
 func main() {
 
 	// Supply the FastText model file location
-	model, err := New("fasttext-model.bin")
+	model, err := New("basic-model.bin")
 	if err != nil {
 		panic(err)
 	}

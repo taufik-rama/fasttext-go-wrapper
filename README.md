@@ -1,26 +1,44 @@
-# How To's
+# FastText Golang Wrapper
 
-- Copy the fasttext `.bin` model into `fastText/models`
+## Overview
 
-- Copy the static fasttext library into main package directory:
+Here's my attempt at wrapping FastText C++ library with Golang CGO
 
-```bash
-$ cd fastText
-$ mkdir build
-$ cd build
-$ cmake ..
-... # Output omitted
+## Requirements
 
-$ make
-... # Output omitted
+- `git`
+- `make`
+- And [other requirements](https://github.com/facebookresearch/fastText/#requirements) for the FastText library
 
-$ cp libfasttext.a ../../ # Copy the static lib into main directory
-```
+## Compiling
 
-- Then, build it normally
+- Clone the `FastText` git repository & compile it
 
-```bash
-# On main package directory
-$ go build
-$ ./fasttext-go-binding
-```
+    ```Bash
+    $ git clone https://github.com/facebookresearch/fastText
+    # Cloning...
+
+    $ cd fastText && make
+    # Compiling...
+    ```
+
+- Copy all the `.o` file into `fastText/obj` directory
+
+    ```Bash
+    $ cp *.o path/to/fastText/obj/
+    $ ls path/to/fastText/obj/
+    ... # All the object file
+    ```
+
+- Compile the project and copy the resulting static archived object (`.a`) into `lib` directory. Then compile the golang package
+
+    ```Bash
+    # On `fastText` directory
+    $ make
+    # ...
+    $ cp build/*.a ../lib/
+    $ cd ..
+
+    # Just compile it normally
+    $ go build
+    ```

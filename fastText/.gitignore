@@ -1,8 +1,1 @@
-.*.swp
-*.o
-*.bin
-*.vec
-data
-fasttext
-result
 build/
