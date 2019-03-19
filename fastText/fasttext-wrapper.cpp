@@ -9,7 +9,7 @@
 #include <sstream>
 #include <cstring>
 #include <fastText/fasttext.h>
-#include <fasttext-wrapper.h>
+#include <fasttext-wrapper.hpp>
 
 extern "C" {
 
