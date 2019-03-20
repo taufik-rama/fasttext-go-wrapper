@@ -46,52 +46,33 @@ func New(file string) (*Model, error) {
 }
 
 // Predict the `keyword`
-func (m *Model) Predict(keyword string) (int, error) {
+func (m *Model) Predict(keyword string) error {
 
 	if !m.isInitialized {
-		return NoLabel,
-			errors.New("The FastText model needs to be initialized first. It's should be done inside the `New()` function")
+		return errors.New("The FastText model needs to be initialized first. It's should be done inside the `New()` function")
 	}
 
-	var (
-		label string
-		prob  float64
-		err   error
-	)
-
-	labelbufsize := 32
+	resultSize := 32
+	result := (*C.char)(C.malloc(C.ulong(resultSize)))
 
 	var cprob C.float
-	cbuflabel := (*C.char)(C.malloc(C.ulong(labelbufsize)))
 
 	status := C.predict(
 		C.CString(keyword),
 		&cprob,
-		cbuflabel,
-		C.int(labelbufsize),
+		result,
+		C.int(resultSize),
 	)
-
-	label = C.GoString(cbuflabel)
-	prob = float64(cprob)
 	if status != 0 {
-		err = fmt.Errorf("Exception when predicting `%s`", keyword)
+		return fmt.Errorf("Exception when predicting `%s`", keyword)
 	}
 
-	C.free(unsafe.Pointer(cbuflabel))
+	// Here's the result from C
+	label := C.GoString(result)
+	prob := float64(cprob)
+	fmt.Println(label, prob)
 
-	if err != nil {
-		return NoLabel, err
-	}
+	C.free(unsafe.Pointer(result))
 
-	// Probability if needed
-	fmt.Println("Probability is", prob)
-
-	// Simple mapping from string label to constant
-	if label == "fasttext_label_a" {
-		return LabelA, nil
-	} else if label == "fasttext_label_b" {
-		return LabelB, nil
-	}
-
-	return NoLabel, err
+	return nil
 }
