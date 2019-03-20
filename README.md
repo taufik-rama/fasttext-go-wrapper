@@ -25,7 +25,7 @@ Here's my attempt at wrapping FastText C++ library with Golang CGO.
 - Clone this repository & copy all the `.o` from previous compile result into directory inside `fastText/obj`.
 
     ```Bash
-    $ git clone https://github.com/taufik-rama/fasttext-go-binding
+    $ git clone https://github.com/taufik-rama/fasttext-go-wrapper
     # Cloning...
 
     $ mkdir fastText/obj

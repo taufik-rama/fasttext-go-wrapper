@@ -2,4 +2,4 @@
 *.a
 *.bin
 *.vec
-fasttext-go-binding
+fasttext-go-wrapper
