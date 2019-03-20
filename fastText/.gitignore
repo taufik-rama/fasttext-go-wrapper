@@ -1,2 +1,4 @@
+lib/*.so
+lib/*.a
 build
 obj

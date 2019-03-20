@@ -33,15 +33,16 @@ Here's my attempt at wrapping FastText C++ library with Golang CGO.
     $ cp /path/to/previous/repo/*.o fastText/obj/
     ```
 
-- Compile the C project and copy the resulting static archived object (`.a`) into `lib` directory. Then compile the golang package.
+- Compile the C project
 
     ```Bash
     $ cd fastText && make
     # Compiling...
+    ```
 
-    $ cd ..
-    $ cp fastText/build/*.a lib/
+- Build the Go package normally
 
-    # Just compile it normally
+    ```Bash
     $ go build
+    # Compiling...
     ```

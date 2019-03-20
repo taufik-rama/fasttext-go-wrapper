@@ -1,6 +1,6 @@
 package main
 
-// #cgo LDFLAGS: -L${SRCDIR}/lib -lfasttext-wrapper -lstdc++ -lm -pthread
+// #cgo LDFLAGS: -L${SRCDIR}/fastText/lib -lfasttext-wrapper -lstdc++ -lm -pthread
 // #include <stdlib.h>
 // int load_model(char *path);
 // int predict(char *query, float *prob, char *buf, int buf_size);

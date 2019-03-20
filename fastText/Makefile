@@ -1,7 +1,7 @@
 CPPFLAGS += -g3 -std=c++11 -Iinclude
 
 libfasttext-wrapper.a: libfasttext-wrapper.o
-	ar rcs build/$@ obj/*.o
+	ar rcs lib/$@ obj/*.o
 
 libfasttext-wrapper.o: fasttext-wrapper.cpp
 	if [ ! -d build ]; then mkdir build; fi
