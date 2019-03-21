@@ -3,3 +3,5 @@
 *.bin
 *.vec
 fasttext-go-wrapper
+
+.vscode/

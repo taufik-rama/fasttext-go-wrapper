@@ -1,4 +1,4 @@
-CPPFLAGS += -g3 -std=c++11 -Iinclude
+CPPFLAGS += -std=c++11 -Iinclude
 
 libfasttext-wrapper.a: libfasttext-wrapper.o
 	ar rcs lib/$@ obj/*.o
@@ -10,4 +10,4 @@ libfasttext-wrapper.o: fasttext-wrapper.cpp
 .PHONY: clean
 
 clean:
-	rm -rf obj
+	rm -rf obj lib/libfasttext-wrapper.a
