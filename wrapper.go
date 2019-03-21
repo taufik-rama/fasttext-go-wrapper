@@ -2,8 +2,8 @@ package main
 
 // #cgo LDFLAGS: -L${SRCDIR}/fastText/lib -lfasttext-wrapper -lstdc++ -lm -pthread
 // #include <stdlib.h>
-// int load_model(char *path);
-// int predict(char *query, float *prob, char *buf, int buf_size);
+// int ft_load_model(char *path);
+// int ft_predict(char *query, float *prob, char *buf, int buf_size);
 import "C"
 
 import (
@@ -34,7 +34,7 @@ type Model struct {
 // FastTest needs some initialization for the model binary located on `file`.
 func New(file string) (*Model, error) {
 
-	status := C.load_model(C.CString(file))
+	status := C.ft_load_model(C.CString(file))
 
 	if status != 0 {
 		return nil, fmt.Errorf("Cannot initialize model on `%s`", file)
@@ -57,7 +57,7 @@ func (m *Model) Predict(keyword string) error {
 
 	var cprob C.float
 
-	status := C.predict(
+	status := C.ft_predict(
 		C.CString(keyword),
 		&cprob,
 		result,

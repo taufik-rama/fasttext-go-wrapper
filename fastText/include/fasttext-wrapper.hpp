@@ -10,7 +10,7 @@ extern "C" {
      * Initialize the fasttext model located on `path`
      * returns 0 on success
      */
-    int load_model(const char* path);
+    int ft_load_model(const char* path);
 
     /**
      * Predict a given keyword
@@ -20,6 +20,6 @@ extern "C" {
      * `out_size`: How much characted to be copied into `out`
      * returns 0 on success
      */
-    int predict(const char* query_in, float* prob, char* out, int out_size);
+    int ft_predict(const char* query_in, float* prob, char* out, int out_size);
     
 }
