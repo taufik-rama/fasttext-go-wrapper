@@ -10,4 +10,4 @@ libfasttext-wrapper.o: fasttext-wrapper.cpp
 .PHONY: clean
 
 clean:
-	rm -rf obj lib/libfasttext-wrapper.a
+	rm -rf obj/libfasttext-wrapper.o lib/libfasttext-wrapper.a

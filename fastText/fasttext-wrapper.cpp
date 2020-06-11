@@ -9,6 +9,7 @@
 #include <sstream>
 #include <cstring>
 #include <fastText/fasttext.h>
+#include <fastText/args.h>
 #include <fasttext-wrapper.hpp>
 
 extern "C" {
@@ -58,6 +59,34 @@ extern "C" {
             strncpy(out, prediction.second.c_str(), out_size);
         }
 
+        return 0;
+    }
+
+    int ft_get_vector_dimension()
+    {
+        if(!ft_initialized) {
+            return -1;
+        }
+        return ft_model.getDimension();
+    }
+
+    int ft_get_sentence_vector(const char* query_in, float* vector_out, int vector_size)
+    {
+        std::string query(query_in);
+
+        if(!ft_has_newline(query)) {
+            query.append("\n");
+        }
+
+        std::istringstream inquery(query);
+        std::istream &in = inquery;
+        fasttext::Vector svec(ft_model.getDimension());
+
+        ft_model.getSentenceVector(in, svec);
+        if(svec.size() != vector_size) {
+            return -1;
+        }
+        memcpy(vector_out, svec.data(), vector_size*sizeof(float));
         return 0;
     }
 }
