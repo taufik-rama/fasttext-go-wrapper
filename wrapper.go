@@ -87,10 +87,8 @@ func (m *Model) GetSentenceVector(keyword string) ([]float64, error) {
 	}
 
 	vecDim := C.ft_get_vector_dimension()
-	// fmt.Println(vecDim)
 	var cfloat C.float
 	result := (*C.float)(C.malloc(C.ulong(vecDim) * C.ulong(unsafe.Sizeof(cfloat))))
-	// fmt.Println(result, C.ulong(vecDim))
 
 	status := C.ft_get_sentence_vector(
 		C.CString(keyword),
@@ -98,18 +96,14 @@ func (m *Model) GetSentenceVector(keyword string) ([]float64, error) {
 		vecDim,
 	)
 
-	// fmt.Println(status)
-
 	if status != 0 {
 		return nil, fmt.Errorf("Exception when predicting `%s`", keyword)
 	}
 	p2 := (*[1 << 30]C.float)(unsafe.Pointer(result))
 	ret := make([]float64, int(vecDim))
 	for i := 0; i < int(vecDim); i++ {
-		// fmt.Println(p2[i])
 		ret[i] = float64(p2[i])
 	}
-	// fmt.Println(ret)
 
 	C.free(unsafe.Pointer(result))
 
