@@ -21,5 +21,20 @@ extern "C" {
      * returns 0 on success
      */
     int ft_predict(const char* query_in, float* prob, char* out, int out_size);
+
+    /**
+     * get dimension of vector from loaded model
+     * returns positive dimension on success
+     */
+    int ft_get_vector_dimension();
     
+    /**
+     * get vector representation from given sentence
+     * `query_in`: The actual keyword to predict
+     * `vector`: PRE-ALLOCATED buffer for sentence vector
+     * `vector_size`: dimmension of allocated vector
+     * returns 0 on success
+     */
+    int ft_get_sentence_vector(const char* query_in, float* vector, int vector_size);
+
 }

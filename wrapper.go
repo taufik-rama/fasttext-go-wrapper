@@ -4,6 +4,8 @@ package main
 // #include <stdlib.h>
 // int ft_load_model(char *path);
 // int ft_predict(char *query, float *prob, char *buf, int buf_size);
+// int ft_get_vector_dimension();
+// int ft_get_sentence_vector(char* query_in, float* vector, int vector_size);
 import "C"
 
 import (
@@ -75,4 +77,35 @@ func (m *Model) Predict(keyword string) error {
 	C.free(unsafe.Pointer(result))
 
 	return nil
+}
+
+// GetSentenceVector the `keyword`
+func (m *Model) GetSentenceVector(keyword string) ([]float64, error) {
+
+	if !m.isInitialized {
+		return nil, errors.New("The FastText model needs to be initialized first. It's should be done inside the `New()` function")
+	}
+
+	vecDim := C.ft_get_vector_dimension()
+	var cfloat C.float
+	result := (*C.float)(C.malloc(C.ulong(vecDim) * C.ulong(unsafe.Sizeof(cfloat))))
+
+	status := C.ft_get_sentence_vector(
+		C.CString(keyword),
+		result,
+		vecDim,
+	)
+
+	if status != 0 {
+		return nil, fmt.Errorf("Exception when predicting `%s`", keyword)
+	}
+	p2 := (*[1 << 30]C.float)(unsafe.Pointer(result))
+	ret := make([]float64, int(vecDim))
+	for i := 0; i < int(vecDim); i++ {
+		ret[i] = float64(p2[i])
+	}
+
+	C.free(unsafe.Pointer(result))
+
+	return ret, nil
 }

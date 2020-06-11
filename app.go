@@ -1,5 +1,7 @@
 package main
 
+import "fmt"
+
 // Example implementation
 
 func main() {
@@ -12,8 +14,14 @@ func main() {
 
 	// Label the sentence with that FastText model
 	sentence := "Sentence to predict"
-	err = model.Predict(sentence)
+	// err = model.Predict(sentence)
+	// if err != nil {
+	// 	panic(err)
+	// }
+
+	vec, err := model.GetSentenceVector(sentence)
 	if err != nil {
 		panic(err)
 	}
+	fmt.Println(vec)
 }
