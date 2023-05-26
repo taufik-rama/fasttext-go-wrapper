@@ -1,4 +1,4 @@
-package main
+package fasttext
 
 // #cgo LDFLAGS: -L${SRCDIR}/fastText/lib -lfasttext-wrapper -lstdc++ -lm -pthread
 // #include <stdlib.h>

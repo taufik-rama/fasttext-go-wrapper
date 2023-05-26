@@ -15,34 +15,45 @@ Here's my attempt at wrapping FastText C++ library with Golang CGO.
 - Clone the `FastText` git repository & compile it.
 
     ```Bash
-    $ git clone https://github.com/facebookresearch/fastText
-    # Cloning...
-
-    $ cd fastText && make
-    # Compiling...
+    $ wget https://github.com/facebookresearch/fastText/archive/v0.9.2.zip
+    $ unzip v0.9.2.zip
+    $ cd fastText-0.9.2
+    $ make
     ```
 
-- Clone this repository & copy all the `.o` from previous compile result into directory inside `fastText/obj`.
+- Clone this repository & copy all the `.o` from `fastText-0.9.2` into directory inside `fasttext-go-wrapper/fastText/obj`.
 
     ```Bash
-    $ git clone https://github.com/taufik-rama/fasttext-go-wrapper
-    # Cloning...
-
+    $ git clone https://github.com/fkurushin/fasttext-go-wrapper
     $ mkdir fastText/obj
-
-    $ cp /path/to/previous/repo/*.o fastText/obj/
+    $ cp fastText-0.9.2/*.o fasttext-go-wrapper/fastText/obj/
     ```
 
 - Compile the C project
 
     ```Bash
-    $ cd fastText && make
-    # Compiling...
+    $ cd fasttext-go-wrapper/fastText && make
     ```
 
 - Build the Go package normally
 
     ```Bash
     $ go build
-    # Compiling...
+    ```
+
+## Basic usage
+- Initialization
+    ```
+    model, err = fasttext.New(modelName)
+    if err != nil {
+        panic(err)
+    }
+    ```
+    
+- Predict vector
+    ```
+    vec, err := model.GetSentenceVector(sentence)
+    if err != nil {
+        panic(err)
+    }
     ```
