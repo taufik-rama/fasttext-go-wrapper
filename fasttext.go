@@ -47,6 +47,14 @@ func New(file string) (*Model, error) {
 	}, nil
 }
 
+func (m *Model) GetDimension() (int, error) {
+	res := C.ft_get_vector_dimension()
+	if res == -1 {
+		return nil, fmt.Errorf("model is not initialized")
+	}
+	return res, nil
+}
+
 // Predict the `keyword`
 func (m *Model) Predict(keyword string) error {
 
