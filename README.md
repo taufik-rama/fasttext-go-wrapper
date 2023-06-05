@@ -35,7 +35,7 @@ Here's my attempt at wrapping FastText C++ library with Golang CGO.
     $ cd fasttext-go-wrapper/fastText && make
     ```
 
-- Build the Go package normally
+- Build the Go package normally (in the fasttext-go-wrapper/ dir)
 
     ```Bash
     $ go build
