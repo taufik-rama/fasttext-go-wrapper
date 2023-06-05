@@ -57,3 +57,22 @@ Here's my attempt at wrapping FastText C++ library with Golang CGO.
         panic(err)
     }
     ```
+## Example of Dockerfile 
+    ```
+    WORKDIR /src
+    RUN wget https://github.com/facebookresearch/fastText/archive/v0.9.2.zip && \
+        unzip v0.9.2.zip
+
+    WORKDIR /src/fastText-0.9.2
+    RUN make
+
+    WORKDIR /src
+    RUN git clone https://github.com/fkurushin/fasttext-go-wrapper && \
+        rm v0.9.2.zip
+
+    WORKDIR /src/fasttext-go-wrapper/fastText/obj
+    RUN cp ../../../fastText-0.9.2/*.o .
+
+    WORKDIR /src/fasttext-go-wrapper/fastText
+    RUN make
+    ```
