@@ -58,7 +58,7 @@ Here's my attempt at wrapping FastText C++ library with Golang CGO.
     }
     ```
 ## Example of Dockerfile 
-    ```
+    ```Docker
     WORKDIR /src
     RUN wget https://github.com/facebookresearch/fastText/archive/v0.9.2.zip && \
         unzip v0.9.2.zip
