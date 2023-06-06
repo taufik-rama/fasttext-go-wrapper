@@ -39,7 +39,7 @@ func New(file string) (*Model, error) {
 	status := C.ft_load_model(C.CString(file))
 
 	if status != 0 {
-		return nil, fmt.Errorf("Cannot initialize model on `%s`", file)
+		return nil, fmt.Errorf("cannot initialize model on `%s`", file)
 	}
 
 	return &Model{
@@ -47,11 +47,19 @@ func New(file string) (*Model, error) {
 	}, nil
 }
 
+func (m *Model) GetDimension() (int, error) {
+	res := int(C.ft_get_vector_dimension())
+	if res == -1 {
+		return res, fmt.Errorf("model is not initialized")
+	}
+	return res, nil
+}
+
 // Predict the `keyword`
 func (m *Model) Predict(keyword string) error {
 
 	if !m.isInitialized {
-		return errors.New("The FastText model needs to be initialized first. It's should be done inside the `New()` function")
+		return errors.New("the fasttext model needs to be initialized first. it's should be done inside the `New()` function")
 	}
 
 	resultSize := 32
@@ -66,7 +74,7 @@ func (m *Model) Predict(keyword string) error {
 		C.int(resultSize),
 	)
 	if status != 0 {
-		return fmt.Errorf("Exception when predicting `%s`", keyword)
+		return fmt.Errorf("exception when predicting `%s`", keyword)
 	}
 
 	// Here's the result from C
@@ -83,7 +91,7 @@ func (m *Model) Predict(keyword string) error {
 func (m *Model) GetSentenceVector(keyword string) ([]float64, error) {
 
 	if !m.isInitialized {
-		return nil, errors.New("The FastText model needs to be initialized first. It's should be done inside the `New()` function")
+		return nil, errors.New("the fasttext model needs to be initialized first. it's should be done inside the `New()` function")
 	}
 
 	vecDim := C.ft_get_vector_dimension()
@@ -97,7 +105,7 @@ func (m *Model) GetSentenceVector(keyword string) ([]float64, error) {
 	)
 
 	if status != 0 {
-		return nil, fmt.Errorf("Exception when predicting `%s`", keyword)
+		return nil, fmt.Errorf("exception when predicting `%s`", keyword)
 	}
 	p2 := (*[1 << 30]C.float)(unsafe.Pointer(result))
 	ret := make([]float64, int(vecDim))
