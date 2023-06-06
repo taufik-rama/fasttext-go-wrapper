@@ -57,6 +57,13 @@ Here's my attempt at wrapping FastText C++ library with Golang CGO.
         panic(err)
     }
     ```
+- Get model dimension
+    ```
+    d, err := model.GetDimension()
+	if err != nil {
+		panic(err)
+	}
+    ```
 ## Example of Dockerfile 
     WORKDIR /src
     RUN wget https://github.com/facebookresearch/fastText/archive/v0.9.2.zip && \
