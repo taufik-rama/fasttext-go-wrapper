@@ -41,6 +41,10 @@ Here's my attempt at wrapping FastText C++ library with Golang CGO.
     $ go build
     ```
 
+    ```Bash
+    $ sudo cp libfasttext-wrapper.a /usr/local/lib/
+    ```
+
 ## Basic usage
 - Initialization
     ```
