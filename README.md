@@ -40,9 +40,10 @@ Here's my attempt at wrapping FastText C++ library with Golang CGO.
     ```Bash
     $ go build
     ```
+- If errors with linker occures in MacOS
 
     ```Bash
-    $ sudo cp libfasttext-wrapper.a /usr/local/lib/
+    $ sudo cp fasttext-go-wrapper/fastText/lib/libfasttext-wrapper.a /usr/local/lib/
     ```
 
 ## Basic usage
