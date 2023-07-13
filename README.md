@@ -56,13 +56,14 @@ Here's my attempt at wrapping FastText C++ library with Golang CGO.
     ```
     
 - Predict vector
-be aware that this method returns a non-normalized vector
     ```
     vec, err := model.GetSentenceVector(sentence)
     if err != nil {
         panic(err)
     }
     ```
+be aware that this method returns a non-normalized vector
+
 - Get model dimension
     ```
     d, err := model.GetDimension()
