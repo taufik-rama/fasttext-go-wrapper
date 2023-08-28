@@ -37,4 +37,19 @@ extern "C" {
      */
     int ft_get_sentence_vector(const char* query_in, float* vector, int vector_size);
 
+    /**
+     * save model to given file
+     * `filename`: the name of the file
+     * returns 0 on success
+    **/ 
+    int ft_save_model(const char* filename);
+
+    /**
+     * 
+     * **/ 
+    // int ft_quantize(const fasttext::Args& qargs);
+    /**
+     * **/
+    // int ft_train(const fasttext::Args& args);
+
 }

@@ -89,4 +89,15 @@ extern "C" {
         memcpy(vector_out, svec.data(), vector_size*sizeof(float));
         return 0;
     }
+
+    int ft_save_model(const char* filename)
+    {
+        if (!ft_initialized) {
+            if (access(filename, W_OK) != 0) {
+                return -1;
+            }
+        }
+        ft_model.saveModel(std::string(filename));
+        return 0;
+    }
 }

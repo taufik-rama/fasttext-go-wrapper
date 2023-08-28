@@ -1,11 +1,12 @@
 package fasttext
 
-// #cgo LDFLAGS: -L${SRCDIR}/fastText/lib -lfasttext-wrapper -lstdc++ -lm -pthread
+// #cgo LDFLAGS: -L${SRCDIR}/fastText/lib -lfasttext-wrapper -lstdc++ -lm -pthread -v
 // #include <stdlib.h>
 // int ft_load_model(char *path);
 // int ft_predict(char *query, float *prob, char *buf, int buf_size);
 // int ft_get_vector_dimension();
 // int ft_get_sentence_vector(char* query_in, float* vector, int vector_size);
+// int ft_save_model(const char* filename);
 import "C"
 
 import (
@@ -25,6 +26,8 @@ const (
 
 	// NoLabel is an example prediction value label
 	NoLabel
+
+	error_init_model = "the fasttext model needs to be initialized first. it's should be done inside the `New()` function"
 )
 
 // Model uses FastText for it's prediction
@@ -48,9 +51,14 @@ func New(file string) (*Model, error) {
 }
 
 func (m *Model) GetDimension() (int, error) {
+
+	if !m.isInitialized {
+		return -1, errors.New(error_init_model)
+	}
+
 	res := int(C.ft_get_vector_dimension())
 	if res == -1 {
-		return res, fmt.Errorf("model is not initialized")
+		return res, errors.New("model is not initialized")
 	}
 	return res, nil
 }
@@ -59,7 +67,7 @@ func (m *Model) GetDimension() (int, error) {
 func (m *Model) Predict(keyword string) error {
 
 	if !m.isInitialized {
-		return errors.New("the fasttext model needs to be initialized first. it's should be done inside the `New()` function")
+		return errors.New(error_init_model)
 	}
 
 	resultSize := 32
@@ -91,10 +99,13 @@ func (m *Model) Predict(keyword string) error {
 func (m *Model) GetSentenceVector(keyword string) ([]float64, error) {
 
 	if !m.isInitialized {
-		return nil, errors.New("the fasttext model needs to be initialized first. it's should be done inside the `New()` function")
+		return nil, errors.New(error_init_model)
 	}
 
 	vecDim := C.ft_get_vector_dimension()
+	if vecDim <= 0 {
+		return nil, fmt.Errorf("the dimension of the model `%d`is srtictly less than 0", vecDim)
+	}
 	var cfloat C.float
 	result := (*C.float)(C.malloc(C.ulong(vecDim) * C.ulong(unsafe.Sizeof(cfloat))))
 
@@ -116,4 +127,17 @@ func (m *Model) GetSentenceVector(keyword string) ([]float64, error) {
 	C.free(unsafe.Pointer(result))
 
 	return ret, nil
+}
+
+func (m *Model) SaveModel(filename string) error {
+	if !m.isInitialized {
+		return errors.New(error_init_model)
+	}
+
+	status := C.ft_save_model(C.CString(filename))
+
+	if status != 0 {
+		return fmt.Errorf("error while loading fasttext model to a `%s`", filename)
+	}
+	return nil
 }

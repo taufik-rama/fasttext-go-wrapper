@@ -18,3 +18,16 @@ func TestGetDimension(t *testing.T) {
 	}
 
 }
+
+func TestSaveModel(t *testing.T) {
+	var newFileName = "model_.bin"
+	model, err := New("model.bin")
+	if err != nil {
+		t.Errorf("error loading model: %v", err)
+	}
+	err = model.SaveModel(newFileName)
+	if err != nil {
+		t.Errorf("error writing to a file: %v", newFileName)
+	}
+
+}
