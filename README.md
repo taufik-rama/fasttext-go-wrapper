@@ -40,6 +40,11 @@ Here's my attempt at wrapping FastText C++ library with Golang CGO.
     ```Bash
     $ go build
     ```
+- If error with linker occures in MacOS
+
+    ```Bash
+    $ sudo cp fasttext-go-wrapper/fastText/lib/libfasttext-wrapper.a /usr/local/lib/
+    ```
 
 ## Basic usage
 - Initialization
@@ -57,6 +62,8 @@ Here's my attempt at wrapping FastText C++ library with Golang CGO.
         panic(err)
     }
     ```
+be aware that this method returns a non-normalized vector
+
 - Get model dimension
     ```
     d, err := model.GetDimension()
