@@ -37,6 +37,20 @@ extern "C" {
      */
     int ft_get_sentence_vector(const char* query_in, float* vector, int vector_size);
 
+
+    /**
+     * train function training fasttext model from input file
+     * `model_name`: type of training model "skipgram", "cbow", "supervised"
+     * `input`: input filename
+     * `output`: output filename
+     * `epoch`: epoch number
+     * `word_ngrams`: n gram range parameter (1, word_ngrams)
+     * `thread`: thread number
+     * `lr`: learning rate of the algorithm
+     * returns 0 on success
+     * **/
+    int ft_train(const char* model_name, const char* input, const char* output, int epoch, int word_ngrams, int thread, float lr);
+
     /**
      * save model to given file
      * `filename`: the name of the file
@@ -48,8 +62,5 @@ extern "C" {
      * 
      * **/ 
     // int ft_quantize(const fasttext::Args& qargs);
-    /**
-     * **/
-    // int ft_train(const fasttext::Args& args);
 
 }

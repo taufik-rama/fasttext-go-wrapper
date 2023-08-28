@@ -9,7 +9,6 @@
 #include <sstream>
 #include <cstring>
 #include <fastText/fasttext.h>
-#include <fastText/args.h>
 #include <fasttext-wrapper.hpp>
 
 extern "C" {
@@ -98,6 +97,32 @@ extern "C" {
             }
         }
         ft_model.saveModel(std::string(filename));
+        return 0;
+    }
+
+    int ft_train(const char* model_name, const char* input, const char* output, int epoch, int word_ngrams, int thread, float lr)
+    {
+        fasttext::Args args_object;
+
+        if (strcmp(model_name, "supervised") == 0) { 
+            args_object.model = fasttext::model_name::sup;
+        } else if (strcmp(model_name, "cbow") == 0) {
+            args_object.model = fasttext::model_name::cbow;
+        } else if (strcmp(model_name, "skipgram") == 0) {
+            args_object.model = fasttext::model_name::sg;
+        } else {
+            return -1;
+        }
+            
+        args_object.input = input;
+        args_object.output = output;
+        args_object.epoch = epoch;
+        args_object.wordNgrams = word_ngrams;
+        args_object.thread = thread;
+        args_object.lr = lr;
+
+        ft_model.train(args_object);
+        ft_initialized = true;
         return 0;
     }
 }

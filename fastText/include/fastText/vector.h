@@ -17,7 +17,6 @@
 namespace fasttext {
 
 class Matrix;
-class QMatrix;
 
 class Vector {
  protected:
@@ -25,10 +24,10 @@ class Vector {
 
  public:
   explicit Vector(int64_t);
-  Vector(const Vector&) = delete;
-  Vector(Vector&&) noexcept;
-  Vector& operator=(const Vector&) = delete;
-  Vector& operator=(Vector&&);
+  Vector(const Vector&) = default;
+  Vector(Vector&&) noexcept = default;
+  Vector& operator=(const Vector&) = default;
+  Vector& operator=(Vector&&) = default;
 
   inline real* data() {
     return data_.data();
@@ -52,9 +51,7 @@ class Vector {
   void addVector(const Vector& source);
   void addVector(const Vector&, real);
   void addRow(const Matrix&, int64_t);
-  void addRow(const QMatrix&, int64_t);
   void addRow(const Matrix&, int64_t, real);
-  void mul(const QMatrix&, const Vector&);
   void mul(const Matrix&, const Vector&);
   int64_t argmax();
 };
